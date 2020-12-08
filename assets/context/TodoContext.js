@@ -8,20 +8,29 @@ class TodoContextProvider extends React.Component {
 
 		this.state = {
 			todos: [
-				{name: 'Pasear'},
-				{name: 'Pasear'},
+				{id: 1, name: 'Pasear'},
+				{id: 2, name: 'Pasear'},
 			],
 		};
 	}
 
 	// create
-	createTodo() { }
+	createTodo(e, todo) {
+		e.preventDefault();
+		const todos = [todo, ...this.state.todos];
+		this.setState({ todos });
+	}
 
 	// read
 	readTodo() { }
 
 	// update
-	updateTodo() { }
+	updateTodo(data) {
+		const todos = [...this.state.todos];
+		let todo = todos.find(element => { return element.id === data.id; });
+		todo.name = data.name;
+		this.setState({ todos: todos, });
+	}
 
 	// delete
 	deleteTodo() { }
