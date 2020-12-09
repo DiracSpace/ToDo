@@ -36,6 +36,7 @@ class TodoContextProvider extends React.Component {
 		try {
 			axios.get('/api/todo/read')
 				.then((response) => {
+					console.log(response);
 					this.setState({ todos: response.data, });
 				})
 				.catch((error) => {
@@ -47,17 +48,37 @@ class TodoContextProvider extends React.Component {
 	}
 
 	// update
-	updateTodo(data) {
-		const todos = [...this.state.todos];
-		let todo = todos.find(element => { return element.id === data.id; });
-		todo.name = data.name;
-		this.setState({ todos: todos, });
+	async updateTodo(data) {
+		try {
+			axios.put('/api/todo/update/' + data.id, data)
+				.then((response) => {
+					const todos = [...this.state.todos];
+					let todo = todos.find(element => { return element.id === data.id; });
+					todo.name = data.name;
+					this.setState({ todos: todos, });
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	// delete
-	deleteTodo(id) {
-		// const todos = [...this.state.todos].filter(element => { return element.id !== id; });
-		this.setState({ todos: [...this.state.todos].filter(element => { return element.id !== id; }), });
+	async deleteTodo(id) {
+		try {
+			axios.delete('/api/todo/delete/' + id)
+				.then((response) => {
+					console.log(response);
+					this.setState({ todos: [...this.state.todos].filter(element => { return element.id !== id; }), });
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	render() {

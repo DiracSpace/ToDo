@@ -24,7 +24,7 @@ class TodoController
 	}
 
     /**
-     * @Route("/read", name="reading")
+     * @Route("/read", name="reading", methods={"GET"})
      */
     public function read(): Response
     {
@@ -63,6 +63,65 @@ class TodoController
           ],
           JsonResponse::HTTP_CREATED
         );
+      } catch (Exception $exception) {
+        return new JsonResponse(
+          [
+            'status' => '500',
+          ],
+          JsonResponse::HTTP_CREATED
+        );
+      }
+      return new JsonResponse(
+        [
+          'status' => '200',
+        ],
+        JsonResponse::HTTP_CREATED
+      );
+    }
+
+    /**
+     * @Route("/update/{id}", name="updating", methods={"PUT"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function update(Request $request)
+    {
+      $data = json_decode(
+        $request -> getContent(),
+        true
+      );
+
+      $todo = new Todo();
+      $todo -> setName($data['name']);
+
+      try {
+        $this -> EntityManager -> flush();
+      } catch (Exception $exception) {
+        return new JsonResponse(
+          [
+            'status' => '500',
+          ],
+          JsonResponse::HTTP_CREATED
+        );
+      }
+      return new JsonResponse(
+        [
+          'status' => '200',
+        ],
+        JsonResponse::HTTP_CREATED
+      );
+    }
+
+    /**
+     * @Route("/delete/{id}", name="deleting", methods={"DELETE"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function delete(Todo $todo)
+    {
+      try {
+        $this -> EntityManager -> remove($todo);
+        $this -> EntityManager -> flush();
       } catch (Exception $exception) {
         return new JsonResponse(
           [
