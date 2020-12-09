@@ -25,7 +25,7 @@ function TodoTable() {
 
 	return (
 		<Fragment>
-			<form onSubmit={(event) => { context.createTodo(event, {id: Math.random(), name: addTodo}); }}>
+			<form onSubmit={(event) => { context.createTodo(event, { name: addTodo }); }}>
 				<Table>
 					<TableHead>
 						<TableRow>

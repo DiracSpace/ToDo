@@ -24,20 +24,20 @@ class Todo
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this -> id;
     }
 
     public function getName(): ?string
     {
-        return $this->name;
+        return $this -> name;
     }
 
     public function setName(string $name): self
     {
-        $this->name = $name;
+        $this -> name = $name;
 
         return $this;
     }
 
-    public function toArray() { return ["id" -> $this -> id, "name" -> $this -> name]; }
+    public function toArray() { return ["id" => $this -> id, "name" => $this -> name]; }
 }
