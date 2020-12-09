@@ -17,8 +17,8 @@ class TodoContextProvider extends React.Component {
 	// create
 	createTodo(e, todo) {
 		e.preventDefault();
-		const todos = [todo, ...this.state.todos];
-		this.setState({ todos });
+		// const todos = [todo, ...this.state.todos];
+		this.setState({ todos: [todo, ...this.state.todos] });
 	}
 
 	// read
@@ -33,7 +33,10 @@ class TodoContextProvider extends React.Component {
 	}
 
 	// delete
-	deleteTodo() { }
+	deleteTodo(id) {
+		// const todos = [...this.state.todos].filter(element => { return element.id !== id; });
+		this.setState({ todos: [...this.state.todos].filter(element => { return element.id !== id; }), });
+	}
 
 	render() {
 		return (
